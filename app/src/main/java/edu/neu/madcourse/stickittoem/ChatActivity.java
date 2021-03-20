@@ -10,6 +10,7 @@ import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -52,8 +53,11 @@ public class ChatActivity extends AppCompatActivity {
 
         // TODO  get username of sender from local storage
         Intent intent = getIntent();
-        sender = intent.getStringExtra("username");
-
+        sender = intent.getStringExtra("sender");
+        receiver = intent.getStringExtra("receiver");
+        TextView receiverName = findViewById(R.id.receiver_name);
+        receiverName.setText(receiver);
+        
         mDatabase = FirebaseDatabase.getInstance().getReference();
         // get sender token
         mDatabase.child("users").child(sender).child("token").addListenerForSingleValueEvent(new ValueEventListener() {
@@ -75,7 +79,7 @@ public class ChatActivity extends AppCompatActivity {
 
         // TODO Need receiver from intent as this is in a single chat
         // get receiver token
-        receiver = "test";
+//        receiver = "test";
 
         mDatabase.child("users").child(receiver).child("token").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

@@ -78,10 +78,9 @@ public class LoginActivity extends AppCompatActivity {
 //                     }
 //                 }
                 // TODO local storage
-                Intent intent = new Intent(LoginActivity.this, ChatActivity.class);
+                Intent intent = new Intent(LoginActivity.this, UserListActivity.class);
                 intent.putExtra("username", username);
                 intent.putExtra("device", Token);
-
                 startActivity(intent);
             }
 
