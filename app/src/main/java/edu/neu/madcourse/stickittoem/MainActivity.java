@@ -32,8 +32,6 @@ public class MainActivity extends AppCompatActivity {
                     .build());
         }
         super.onCreate(savedInstanceState);
-        // TODO Login layout
-//        setContentView(R.layout.activity_main);
         Intent i = getIntent();
         Bundle extras = i.getExtras();
         if (extras != null) {
