@@ -12,13 +12,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -94,8 +90,6 @@ public class ChatActivity extends AppCompatActivity {
 
             }
         });
-
-        // TODO Load message history?
     }
 
     public void sendMessageToDevice(View type) {
@@ -175,11 +169,21 @@ public class ChatActivity extends AppCompatActivity {
         // add message
         mDatabase.child("messages").child(messageID).child("content").setValue(message);
         mDatabase.child("messages").child(messageID).child("timestamp").setValue(timestamp);
+        mDatabase.child("messages").child(messageID).child("sender").setValue(sender);
+        mDatabase.child("messages").child(messageID).child("receiver").setValue(receiver);
     }
 
     private String convertStreamToString(InputStream is) {
         Scanner s = new Scanner(is).useDelimiter("\\A");
         return s.hasNext() ? s.next().replace(",", ",\n") : "";
+    }
+
+    public void onHistoryChat(View type) {
+        Intent intent = new Intent(ChatActivity.this, HistoryChatActivity.class);
+        intent.putExtra("sender", sender);
+        intent.putExtra("receiver", receiver);
+
+        startActivity(intent);
     }
 
 }
