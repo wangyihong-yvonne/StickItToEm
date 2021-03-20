@@ -184,68 +184,6 @@ public class ChatActivity extends AppCompatActivity {
         return s.hasNext() ? s.next().replace(",", ",\n") : "";
     }
 
-    private void getChatHistory(String sender, String receiver) {
-        DatabaseReference ref = mDatabase.child("chats").child("send").child(sender).child(receiver).child("messages");
-        ref.addListenerForSingleValueEvent(
-                new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        //Get map of users in datasnapshot
-                        List<String> messageList;
-                        messageList = collectMessageRefList((Map<String,Object>) dataSnapshot.getValue());
-
-                        mDatabase.child("messages").addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                collectMessages((Map<String,Object>) snapshot.getValue(), messageList);
-
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-
-                            }
-                        });
-
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                        //handle databaseError
-                    }
-                });
-    }
-
-    private List<String> collectMessageRefList(Map<String,Object> messageRefs) {
-
-        ArrayList<String> messageList = new ArrayList<>();
-
-        //iterate through each msg
-        for (Map.Entry<String, Object> entry : messageRefs.entrySet()){
-
-            //Get msg map
-            String singleMsgRef = (String) entry.getValue();
-            //Get value field and append to list
-            messageList.add( singleMsgRef);
-        }
-        System.out.println(messageList.toString());
-        return messageList;
-    }
-
-    private void collectMessages(Map<String,Object> messages, List<String> messageRefs) {
-        ArrayList<ChatMessage> messageList = new ArrayList<>();
-        for (String msgRef : messageRefs) {
-            Map msgMap = (Map) messages.get(msgRef);
-            ChatMessage msg = new ChatMessage();
-            //Get value field and append to list
-            String content = (String) msgMap.get("content");
-            msg.setContent(content);
-            // TODO: convert string timestamp to Date
-            Long timestamp = (Long) msgMap.get("timestamp");
-            msg.setTimestamp(timestamp);
-            messageList.add(msg);
-        }
-    }
     public void onHistoryChat(View type) {
         Intent intent = new Intent(ChatActivity.this, HistoryChatActivity.class);
         intent.putExtra("sender", sender);
