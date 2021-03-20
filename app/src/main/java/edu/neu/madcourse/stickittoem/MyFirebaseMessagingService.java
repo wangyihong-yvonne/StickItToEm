@@ -38,7 +38,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             showNotification(remoteMessage);
         }
         extractPayloadDataForegroundCase(remoteMessage);
-        System.out.println("!!!!!!!!!!!!!!!!!!!");
     }
 
 

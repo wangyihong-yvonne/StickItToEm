@@ -2,6 +2,7 @@ package edu.neu.madcourse.stickittoem;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,10 +18,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.iid.InstanceIdResult;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 public class LoginActivity extends AppCompatActivity {
+    private static final String TAG = LoginActivity.class.getSimpleName();
     private EditText usernameEditText;
     private String Token;
     private DatabaseReference mDatabase;
@@ -35,25 +36,22 @@ public class LoginActivity extends AppCompatActivity {
         usernameEditText = findViewById(R.id.editText);
         button = findViewById(R.id.button);
 
-        // Get device ID
-        //FirebaseMessaging.getToken(){} need to check here
-        FirebaseInstanceId.getInstance().getInstanceId()
-                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(new OnCompleteListener<String>() {
                     @Override
-                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                    public void onComplete(@NonNull Task<String> task) {
                         if (!task.isSuccessful()) {
+                            Log.w(TAG, "Fetching FCM registration token failed", task.getException());
                             Toast.makeText(LoginActivity.this, "getToken failed", Toast.LENGTH_SHORT).show();
                             return;
                         }
-
-                        String token = task.getResult().getToken();
-                        Token = token;
+                        // Get new FCM registration token
+                        Token = task.getResult();
                     }
                 });
 
         // Retrieve an instance of database using reference the location
         mDatabase = FirebaseDatabase.getInstance().getReference();
-
     }
 
     public void login(View view) {
@@ -79,7 +77,7 @@ public class LoginActivity extends AppCompatActivity {
 //                         mDatabase.child("users").child((kv.getKey())).child("token").setValue("offline");
 //                     }
 //                 }
-
+                // TODO local storage
                 Intent intent = new Intent(LoginActivity.this, ChatActivity.class);
                 intent.putExtra("username", username);
                 intent.putExtra("device", Token);

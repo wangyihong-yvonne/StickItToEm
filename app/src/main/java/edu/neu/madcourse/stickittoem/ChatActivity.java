@@ -3,6 +3,7 @@ package edu.neu.madcourse.stickittoem;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -15,6 +16,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.database.DatabaseReference;
@@ -29,6 +31,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Scanner;
+import java.util.UUID;
 
 public class ChatActivity extends AppCompatActivity {
 
@@ -36,78 +39,74 @@ public class ChatActivity extends AppCompatActivity {
 
     private static final String SERVER_KEY = "key=AAAAvlNaC0Y:APA91bHK2AhlahN1V-TdKSX0K_OYLN0pBNhU7oGg97fbNlnm1lomD4iinPTX-phC_aR19pHWnQig5A38qIxNsA81yrilpkGJoR3VnM8GfG28DpcpSi9KsS9UddOlxT6dOdBg7SDYatVY";
 
-    private static String TOKEN1 = "";
+    private String sender;
+    private String senderToken;
 
-    private static String receiverToken;
-
+    private String receiver;
+    private String receiverToken;
     private DatabaseReference mDatabase;
-
-    private static String sender;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
 
-        FirebaseMessaging.getInstance().getToken()
-                .addOnCompleteListener(new OnCompleteListener<String>() {
-                    @Override
-                    public void onComplete(@NonNull Task<String> task) {
-                        if (!task.isSuccessful()) {
-                            Log.w(TAG, "Fetching FCM registration token failed", task.getException());
-                            return;
-                        }
+        // TODO  get username of sender from local storage
+        Intent intent = getIntent();
+        sender = intent.getStringExtra("username");
 
-                        // Get new FCM registration token
-                        TOKEN1 = task.getResult();
-                        mDatabase = FirebaseDatabase.getInstance().getReference();
-                        Toast.makeText(ChatActivity.this, TOKEN1, Toast.LENGTH_SHORT).show();
-                    }
-                });
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        // get sender token
+        mDatabase.child("users").child(sender).child("token").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                // Check the existence of the receiver
+                if (!snapshot.exists()) {
+                    Toast.makeText(ChatActivity.this, "Sender " + sender + " does not exist!", Toast.LENGTH_SHORT).show();
+                } else {
+                    senderToken = snapshot.getValue(String.class);
+                }
+            }
 
-    }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
-    //testing purpose
-    public void Login(View type) {
-        final EditText receiverEditText = findViewById(R.id.user);
-        sender = receiverEditText.getText().toString().trim();
-        System.out.println(sender);
-        mDatabase.child("users").child(sender).child("token").setValue(TOKEN1);
-    }
+            }
+        });
 
+        // TODO Need receiver from intent as this is in a single chat
+        // get receiver token
+        receiver = "test";
 
-    public void sendMessageToDevice(View type) {
-        // TODO find user token
-        final EditText receiverText = findViewById(R.id.receiver_name);
-        final String receiver = receiverText.getText().toString().trim();
-        final EditText editMessageText = findViewById(R.id.edit_message);
-        final String editMessage= editMessageText.getText().toString().trim();
-
-        mDatabase.child("users").child(receiver).addListenerForSingleValueEvent(new ValueEventListener() {
+        mDatabase.child("users").child(receiver).child("token").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 // Check the existence of the receiver
                 if (!snapshot.exists()) {
                     Toast.makeText(ChatActivity.this, "Receiver " + receiver + " does not exist!", Toast.LENGTH_SHORT).show();
                 } else {
-                    receiverToken = snapshot.child("token").getValue(String.class);
-                    sendMessageToDevice(sender, receiverToken, editMessage);
+                    receiverToken = snapshot.getValue(String.class);
                 }
             }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
-                }
-            });
+            }
+        });
+
+        // TODO Load message history?
+    }
+
+    public void sendMessageToDevice(View type) {
+        // TODO Check content sticker only
+        final EditText editMessageText = findViewById(R.id.edit_message);
+        final String editMessage = editMessageText.getText().toString().trim();
+        sendMessageToDevice(sender, receiverToken, editMessage);
     }
 
 
-
     private void sendMessageToDevice(String sender, String targetToken, String text) {
-
-        // TODO Check content emoji only
-
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -153,14 +152,30 @@ public class ChatActivity extends AppCompatActivity {
                             Toast.makeText(ChatActivity.this, resp, Toast.LENGTH_LONG).show();
                         }
                     });
+                    // TODO save messgage to db
+                    saveMessageToDB(text, System.currentTimeMillis());
                 } catch (JSONException | IOException e) {
                     e.printStackTrace();
                 }
             }
         }).start();
-
     }
 
+    private void saveMessageToDB(String message, long timestamp) {
+        // add 2 records to chats: chats-sender-receiver-messageID chats-receiver-sender-messageID
+        String messageID = UUID.randomUUID().toString();
+        DatabaseReference pushRefForSend = mDatabase.child("chats").child("send").child(sender).child(receiver).child("messages").push();
+        pushRefForSend.setValue(messageID);
+
+        if (!receiver.equals(sender)) {
+            DatabaseReference pushRefForReceive = mDatabase.child("chats").child("send").child(receiver).child(sender).child("messages").push();
+            pushRefForReceive.setValue(messageID);
+        }
+
+        // add message
+        mDatabase.child("messages").child(messageID).child("content").setValue(message);
+        mDatabase.child("messages").child(messageID).child("timestamp").setValue(timestamp);
+    }
 
     private String convertStreamToString(InputStream is) {
         Scanner s = new Scanner(is).useDelimiter("\\A");
