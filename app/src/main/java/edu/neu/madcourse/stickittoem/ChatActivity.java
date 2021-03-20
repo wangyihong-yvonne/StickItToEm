@@ -172,7 +172,9 @@ public class ChatActivity extends AppCompatActivity {
         // add message
         mDatabase.child("messages").child(messageID).child("content").setValue(message);
         mDatabase.child("messages").child(messageID).child("timestamp").setValue(timestamp);
+        //TODO hardcode
         getChatHistory("xuan", "test");
+
         mDatabase.child("messages").child(messageID).child("sender").setValue(sender);
         mDatabase.child("messages").child(messageID).child("receiver").setValue(receiver);
     }
