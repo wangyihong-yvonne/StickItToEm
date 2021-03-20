@@ -16,8 +16,11 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 public class HistoryChatActivity extends AppCompatActivity {
 
@@ -35,7 +38,7 @@ public class HistoryChatActivity extends AppCompatActivity {
         receiver = intent.getStringExtra("receiver");
 
 
-        List<String> messageIDs = new ArrayList<>();
+        Map<Long, List<String>> timeMessageIDsMap = new HashMap<>();
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
         TextView historyWithView = (TextView) findViewById(R.id.history_with);
@@ -46,20 +49,38 @@ public class HistoryChatActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (!snapshot.exists()) {
                 } else {
-                    // show total stickers sent
-                    Map<String, String> senderToReceiverMap = (Map<String, String>) snapshot.getValue();
-//                    TextView totalView = (TextView) findViewById(R.id.num_total_stickers);
-//                    totalView.setText(String.valueOf(senderToReceiverMap.size()));
-                    messageIDs.addAll(senderToReceiverMap.values());
+                    Map<String, Map<String, Object>> senderToReceiverMap = (Map<String, Map<String, Object>>) snapshot.getValue();
+                    for (Map<String, Object> m : senderToReceiverMap.values()) {
+                        // m e.g.: {"timestamp":123, "id":"randomuuid"}
+                        long time = (Long) m.get("timestamp");
+                        List<String> list = timeMessageIDsMap.getOrDefault(time, new ArrayList<>());
+                        list.add((String) m.get("id"));
+                        timeMessageIDsMap.put(time, list);
+                    }
 
                     // get received messages from the current receiver
                     mDatabase.child("chats").child("receive").child(sender).child(receiver).child("messages").addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             if (snapshot.exists()) {
-                                Map<String, String> receiverToSenderMap = (Map<String, String>) snapshot.getValue();
-                                messageIDs.addAll(receiverToSenderMap.values());
+                                Map<String, Map<String, Object>> receiverToSenderMap = (Map<String, Map<String, Object>>) snapshot.getValue();
+
+                                // m e.g.: {"timestamp":123, "id":"randomuuid"}
+                                for (Map<String, Object> m : senderToReceiverMap.values()) {
+                                    // m e.g.: {"timestamp":123, "id":"randomuuid"}
+                                    long time = (Long) m.get("timestamp");
+                                    List<String> list = timeMessageIDsMap.getOrDefault(time, new ArrayList<>());
+                                    list.add((String) m.get("id"));
+                                    timeMessageIDsMap.put(time, list);
+                                }
                             }
+
+                            List<String> messageIDs = new ArrayList<>();
+                            SortedSet<Long> keys = new TreeSet<>(timeMessageIDsMap.keySet());
+                            for (long key : keys) {
+                                messageIDs.addAll(timeMessageIDsMap.get(key));
+                            }
+
                             // get each messages from db then display
                             for (String messageID : messageIDs) {
                                 mDatabase.child("messages").child(messageID).addListenerForSingleValueEvent(new ValueEventListener() {
