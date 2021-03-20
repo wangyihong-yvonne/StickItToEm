@@ -74,11 +74,11 @@ public class LoginActivity extends AppCompatActivity {
         mDatabase.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot kv : dataSnapshot.getChildren()) {
-                    if (kv.child("token").getValue(String.class).equals(Token) && !kv.getKey().equals(username)) {
-                        mDatabase.child("users").child((kv.getKey())).child("token").setValue("offline");
-                    }
-                }
+//                 for (DataSnapshot kv : dataSnapshot.getChildren()) {
+//                     if (kv.child("token").getValue(String.class).equals(Token) && !kv.getKey().equals(username)) {
+//                         mDatabase.child("users").child((kv.getKey())).child("token").setValue("offline");
+//                     }
+//                 }
 
                 Intent intent = new Intent(LoginActivity.this, ChatActivity.class);
                 intent.putExtra("username", username);
