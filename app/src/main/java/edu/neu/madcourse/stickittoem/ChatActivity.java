@@ -166,16 +166,19 @@ public class ChatActivity extends AppCompatActivity {
         // add 2 records to chats: chats-sender-receiver-messageID chats-receiver-sender-messageID
         String messageID = UUID.randomUUID().toString();
         DatabaseReference pushRefForSend = mDatabase.child("chats").child("send").child(sender).child(receiver).child("messages").push();
-        pushRefForSend.setValue(messageID);
+        pushRefForSend.child("id").setValue(messageID);
+        pushRefForSend.child("timestamp").setValue(timestamp);
 
         if (!receiver.equals(sender)) {
             DatabaseReference pushRefForReceive = mDatabase.child("chats").child("receive").child(receiver).child(sender).child("messages").push();
-            pushRefForReceive.setValue(messageID);
+            pushRefForSend.child("id").setValue(messageID);
+            pushRefForSend.child("timestamp").setValue(timestamp);
         }
 
         // add message
         mDatabase.child("messages").child(messageID).child("content").setValue(message);
         mDatabase.child("messages").child(messageID).child("timestamp").setValue(timestamp);
+
         mDatabase.child("messages").child(messageID).child("sender").setValue(sender);
         mDatabase.child("messages").child(messageID).child("receiver").setValue(receiver);
     }
