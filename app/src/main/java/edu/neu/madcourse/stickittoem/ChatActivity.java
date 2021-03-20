@@ -30,6 +30,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 import java.util.UUID;
 
@@ -175,11 +178,76 @@ public class ChatActivity extends AppCompatActivity {
         // add message
         mDatabase.child("messages").child(messageID).child("content").setValue(message);
         mDatabase.child("messages").child(messageID).child("timestamp").setValue(timestamp);
+        getChatHistory("xuan", "test");
     }
 
     private String convertStreamToString(InputStream is) {
         Scanner s = new Scanner(is).useDelimiter("\\A");
         return s.hasNext() ? s.next().replace(",", ",\n") : "";
+    }
+
+    private void getChatHistory(String sender, String receiver) {
+        DatabaseReference ref = mDatabase.child("chats").child("send").child(sender).child(receiver).child("messages");
+        ref.addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        //Get map of users in datasnapshot
+                        List<String> messageList;
+                        messageList = collectMessageRefList((Map<String,Object>) dataSnapshot.getValue());
+
+                        mDatabase.child("messages").addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                collectMessages((Map<String,Object>) snapshot.getValue(), messageList);
+
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        //handle databaseError
+                    }
+                });
+    }
+
+    private List<String> collectMessageRefList(Map<String,Object> messageRefs) {
+
+        ArrayList<String> messageList = new ArrayList<>();
+
+        //iterate through each msg
+        for (Map.Entry<String, Object> entry : messageRefs.entrySet()){
+
+            //Get msg map
+            String singleMsgRef = (String) entry.getValue();
+            //Get value field and append to list
+            messageList.add( singleMsgRef);
+        }
+        System.out.println(messageList.toString());
+        return messageList;
+    }
+
+    private void collectMessages(Map<String,Object> messages, List<String> messageRefs) {
+        ArrayList<Message> messageList = new ArrayList<>();
+        for (String msgRef : messageRefs) {
+            Map msgMap = (Map) messages.get(msgRef);
+            Message msg = new Message();
+            //Get value field and append to list
+            String content = (String) msgMap.get("content");
+            msg.setContent(content);
+
+            // TODO: convert string timestamp to Date
+            Long timestamp = (Long) msgMap.get("timestamp");
+            msg.setTimestamp(timestamp);
+            messageList.add(msg);
+        }
     }
 
 }
