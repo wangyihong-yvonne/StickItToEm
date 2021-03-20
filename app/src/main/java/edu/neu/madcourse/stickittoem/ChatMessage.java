@@ -12,7 +12,8 @@ public class ChatMessage {
         this.content = content;
         this.timestamp = timestamp;
     }
-
+    public ChatMessage() {
+    }
     public String getSender() {
         return sender;
     }

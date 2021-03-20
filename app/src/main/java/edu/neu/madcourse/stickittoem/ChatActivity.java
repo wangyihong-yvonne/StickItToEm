@@ -231,14 +231,13 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     private void collectMessages(Map<String,Object> messages, List<String> messageRefs) {
-        ArrayList<Message> messageList = new ArrayList<>();
+        ArrayList<ChatMessage> messageList = new ArrayList<>();
         for (String msgRef : messageRefs) {
             Map msgMap = (Map) messages.get(msgRef);
-            Message msg = new Message();
+            ChatMessage msg = new ChatMessage();
             //Get value field and append to list
             String content = (String) msgMap.get("content");
             msg.setContent(content);
-
             // TODO: convert string timestamp to Date
             Long timestamp = (Long) msgMap.get("timestamp");
             msg.setTimestamp(timestamp);
