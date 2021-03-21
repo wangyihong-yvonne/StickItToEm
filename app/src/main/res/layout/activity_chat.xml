@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="428dp"
         android:text="@string/congrats"
+        android:onClick="onClick1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.133"
         app:layout_constraintStart_toStartOf="parent"
@@ -23,6 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="428dp"
         android:text="@string/eyes"
+        android:onClick="onClick1"
         app:layout_constraintEnd_toStartOf="@+id/button_likes"
         app:layout_constraintHorizontal_bias="0.633"
         app:layout_constraintStart_toEndOf="@+id/button_congrats"
@@ -34,6 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="428dp"
         android:text="@string/like"
+        android:onClick="onClick1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.894"
         app:layout_constraintStart_toStartOf="parent"
@@ -53,19 +56,19 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.42" />
 
-    <EditText
-        android:id="@+id/edit_message"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="input here"
-        android:textAlignment="center"
-        app:layout_constraintBottom_toTopOf="@+id/send_msg_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.432" />
+<!--    <EditText-->
+<!--        android:id="@+id/edit_message"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:ems="10"-->
+<!--        android:hint="input here"-->
+<!--        android:textAlignment="center"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/send_msg_button"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.497"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintVertical_bias="0.432" />-->
 
         <TextView
         android:id="@+id/textView2_sticker"
@@ -127,7 +130,7 @@
         android:id="@+id/textView3"
         android:layout_width="286dp"
         android:layout_height="20dp"
-        android:text="select stikers below"
+        android:text="select stickers below"
         android:textAlignment="center"
         android:textAllCaps="true"
         app:layout_constraintBottom_toBottomOf="parent"
