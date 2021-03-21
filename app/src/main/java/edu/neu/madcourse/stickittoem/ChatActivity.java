@@ -8,11 +8,16 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
@@ -28,6 +33,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
@@ -45,11 +51,19 @@ public class ChatActivity extends AppCompatActivity {
     private String receiver;
     private String receiverToken;
     private DatabaseReference mDatabase;
+    private int sticker;
+    private TextView textViewSticker;
+    private DatabaseReference databaseReference;
+
     //onResume
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_chat);
+        textViewSticker = findViewById(R.id.textView2_sticker);
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+
 
         // TODO  get username of sender from local storage
         Intent intent = getIntent();
@@ -64,6 +78,7 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 // Check the existence of the receiver
+                Iterator<DataSnapshot> dataSnapshotIterator = snapshot.getChildren().iterator();
                 if (!snapshot.exists()) {
                     Toast.makeText(ChatActivity.this, "Sender " + sender + " does not exist!", Toast.LENGTH_SHORT).show();
                 } else {
@@ -78,9 +93,6 @@ public class ChatActivity extends AppCompatActivity {
         });
 
         // TODO Need receiver from intent as this is in a single chat
-        // get receiver token
-//        receiver = "test";
-
         mDatabase.child("users").child(receiver).child("token").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -97,7 +109,83 @@ public class ChatActivity extends AppCompatActivity {
 
             }
         });
+        // get receiver token
+//        receiver = "test";
+
+        // set onClickListeners for sticker buttons
+        findViewById(R.id.button_congrats).setOnClickListener(sendStickerListener);
+        findViewById(R.id.button_eyes).setOnClickListener(sendStickerListener);
+        findViewById(R.id.button_likes).setOnClickListener(sendStickerListener);
     }
+
+private View.OnClickListener sendStickerListener = new View.OnClickListener() {
+    @Override
+    public void onClick(final View view) {
+        final StickerUserPair stickerUserPair =
+                new StickerUserPair(sender, "");
+            databaseReference.child("users").child(String.valueOf(receiver))
+                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if (snapshot.getValue() != null) {
+
+                                switch (view.getId()) {
+                                    case R.id.button_congrats:
+                                        stickerUserPair.stickerName = "congrats";
+
+                                        // use push() when appending to an array
+                                        databaseReference.child("users").child(String.valueOf(receiver))
+                                                .child("stickerUserPairs").push().setValue(stickerUserPair);
+                                        break;
+                                    case R.id.button_eyes:
+                                        stickerUserPair.stickerName = "eyes";
+
+                                        databaseReference.child("users").child(String.valueOf(receiver))
+                                                .child("stickerUserPairs").push().setValue(stickerUserPair);
+                                        break;
+                                    case R.id.button_likes:
+                                        stickerUserPair.stickerName = "like";
+
+                                        databaseReference.child("users").child(String.valueOf(receiver))
+                                                .child("stickerUserPairs").push().setValue(stickerUserPair);
+                                        break;
+                                }
+
+                                databaseReference.child("users")
+                                        .child(String.valueOf(receiver))
+                                        .child("token").addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        String deviceToSendTo = snapshot.getValue().toString();
+
+                                        final String smileyEmoji;
+
+                                        // assign emoji
+                                        if (stickerUserPair.stickerName.equals("congrats")) {
+                                            smileyEmoji = "🥳";
+                                        } else if (stickerUserPair.stickerName.equals("like")) {
+                                            smileyEmoji = "👍";
+                                        } else {
+                                            smileyEmoji = "👀";
+                                        }
+
+                                        sendMessageToDevice(sender, receiverToken, smileyEmoji);
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+
+                                    }
+                                });
+                            }
+                        }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+    }
+};
 
     public void sendMessageToDevice(View type) {
         // TODO Check content sticker only
@@ -105,8 +193,6 @@ public class ChatActivity extends AppCompatActivity {
         final String editMessage = editMessageText.getText().toString().trim();
         sendMessageToDevice(sender, receiverToken, editMessage);
     }
-
-
     private void sendMessageToDevice(String sender, String targetToken, String text) {
         new Thread(new Runnable() {
             @Override
@@ -165,6 +251,7 @@ public class ChatActivity extends AppCompatActivity {
     private void saveMessageToDB(String message, long timestamp) {
         // add 2 records to chats: chats-sender-receiver-messageID chats-receiver-sender-messageID
         String messageID = UUID.randomUUID().toString();
+        String sticker = textViewSticker.getText().toString();
         DatabaseReference pushRefForSend = mDatabase.child("chats").child("send").child(sender).child(receiver).child("messages").push();
         pushRefForSend.child("id").setValue(messageID);
         pushRefForSend.child("timestamp").setValue(timestamp);
