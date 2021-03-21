@@ -24,7 +24,7 @@ public class UserListActivity extends AppCompatActivity {
     private DatabaseReference mDatabase;
     private String sender;
     private String senderToken;
-
+    LinearLayout layout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +33,29 @@ public class UserListActivity extends AppCompatActivity {
         sender = intent.getStringExtra("username");
         senderToken = intent.getStringExtra("device");
         mDatabase = FirebaseDatabase.getInstance().getReference();
+//        mDatabase.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                if (!snapshot.exists()) {
+//                } else {
+//                    List<User> userList = getUserList((Map<String,Object>) snapshot.getValue());
+//
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
+    }
+
+    @Override
+    public void onResume()
+    {  // After a pause OR at startup
+        super.onResume();
+        layout = (LinearLayout) findViewById(R.id.user_list_constraint_layout);
+        layout.removeAllViews();
         mDatabase.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -52,6 +75,7 @@ public class UserListActivity extends AppCompatActivity {
 
     private List<User> getUserList(Map<String,Object> users) {
         List<User> userList = new ArrayList<>();
+        LinearLayout layout = (LinearLayout) findViewById(R.id.user_list_constraint_layout);
         for (Map.Entry<String, Object> entry : users.entrySet()) {
             String username = entry.getKey();
             HashMap<String, Object> map = (HashMap<String,Object>)entry.getValue();
@@ -59,7 +83,6 @@ public class UserListActivity extends AppCompatActivity {
             User user = new User(username, token);
             userList.add(user);
 
-            LinearLayout layout = (LinearLayout) findViewById(R.id.user_list_constraint_layout);
             TextView textView = new TextView(UserListActivity.this);
             textView.setText(user.toString());
             textView.setOnClickListener(new View.OnClickListener() {
@@ -73,6 +96,7 @@ public class UserListActivity extends AppCompatActivity {
             });
             layout.addView(textView);
         }
+
         return userList;
     }
 

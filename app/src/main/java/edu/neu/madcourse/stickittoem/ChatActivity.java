@@ -45,7 +45,7 @@ public class ChatActivity extends AppCompatActivity {
     private String receiver;
     private String receiverToken;
     private DatabaseReference mDatabase;
-
+    //onResume
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
