@@ -7,6 +7,43 @@
     tools:context=".ChatActivity">
 
     <Button
+        android:id="@+id/button_congrats"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="144dp"
+        android:text="@string/congrats"
+        app:layout_constraintBottom_toTopOf="@+id/send_msg_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.108"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <Button
+        android:id="@+id/button_eyes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="148dp"
+        android:text="@string/eyes"
+        app:layout_constraintBottom_toTopOf="@+id/send_msg_button"
+        app:layout_constraintEnd_toStartOf="@+id/button_likes"
+        app:layout_constraintStart_toEndOf="@+id/button_congrats"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <Button
+        android:id="@+id/button_likes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/like"
+        app:layout_constraintBottom_toTopOf="@+id/send_msg_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.854"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.762" />
+
+    <Button
         android:id="@+id/send_msg_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -28,10 +65,10 @@
         android:inputType="textPersonName"
         app:layout_constraintBottom_toTopOf="@+id/send_msg_button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.507"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.927" />
+        app:layout_constraintVertical_bias="0.496" />
 
     <TextView
         android:id="@+id/textView"
