@@ -3,4 +3,7 @@
     <string name="id" translatable="false">InstanceID Token: %s</string>
     <string name="login">Login</string>
     <string name="username">username</string>
+    <string name="congrats" translatable="false">🥳</string>
+    <string name="like" translatable="false">👍</string>
+    <string name="eyes" translatable="false">👀</string>
 </resources>
