@@ -22,7 +22,7 @@ import com.google.firebase.messaging.FirebaseMessaging;
 
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = LoginActivity.class.getSimpleName();
-    private EditText usernameEditText;
+    private EditText Username;
     private String Token;
     private DatabaseReference mDatabase;
     private String username;
@@ -33,8 +33,8 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        usernameEditText = findViewById(R.id.editText);
-        button = findViewById(R.id.button);
+        Username = findViewById(R.id.editText_username);
+        button = findViewById(R.id.button_login);
 
         FirebaseMessaging.getInstance().getToken()
                 .addOnCompleteListener(new OnCompleteListener<String>() {
@@ -45,12 +45,10 @@ public class LoginActivity extends AppCompatActivity {
                             Toast.makeText(LoginActivity.this, "getToken failed", Toast.LENGTH_SHORT).show();
                             return;
                         }
-                        // Get new FCM registration token
                         Token = task.getResult();
                     }
                 });
 
-        // Retrieve an instance of database using reference the location
         mDatabase = FirebaseDatabase.getInstance().getReference();
     }
 
@@ -59,9 +57,9 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-        username = usernameEditText.getText().toString().trim();
+        username = Username.getText().toString().trim();
         // Keep the previous username
-        usernameEditText.setText(username);
+        Username.setText(username);
         if (username.equals("")) {
             Toast.makeText(this, "Username can't be empty!", Toast.LENGTH_SHORT).show();
             return;
@@ -72,11 +70,6 @@ public class LoginActivity extends AppCompatActivity {
         mDatabase.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                 for (DataSnapshot kv : dataSnapshot.getChildren()) {
-//                     if (kv.child("token").getValue(String.class).equals(Token) && !kv.getKey().equals(username)) {
-//                         mDatabase.child("users").child((kv.getKey())).child("token").setValue("offline");
-//                     }
-//                 }
                 // TODO local storage
                 Intent intent = new Intent(LoginActivity.this, UserListActivity.class);
                 intent.putExtra("username", username);
