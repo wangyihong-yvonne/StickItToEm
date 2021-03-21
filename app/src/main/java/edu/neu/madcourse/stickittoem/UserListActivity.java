@@ -77,14 +77,23 @@ public class UserListActivity extends AppCompatActivity {
         List<User> userList = new ArrayList<>();
         LinearLayout layout = (LinearLayout) findViewById(R.id.user_list_constraint_layout);
         for (Map.Entry<String, Object> entry : users.entrySet()) {
+            int stickerCount = 0;
             String username = entry.getKey();
             HashMap<String, Object> map = (HashMap<String,Object>)entry.getValue();
             String token = (String) map.get("token");
             User user = new User(username, token);
             userList.add(user);
 
+            Map<String, Object> stickerMap = (Map<String, Object>) map.get("stickers");
+            if ( stickerMap != null) {
+                Map<String, Object> stickerSendMap = (Map<String, Object>) stickerMap.get("send");
+                if (stickerSendMap != null) {
+                stickerCount = stickerSendMap.size();
+                }
+            }
+
             TextView textView = new TextView(UserListActivity.this);
-            textView.setText(user.toString());
+            textView.setText(user.toString() + "    # sticker sent count: " + stickerCount);
             textView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
