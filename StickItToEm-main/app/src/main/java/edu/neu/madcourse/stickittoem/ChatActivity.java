@@ -114,12 +114,46 @@ public class ChatActivity extends AppCompatActivity {
         });
     }
 
+    public void onClick1(View view)
+    {
+        TextView message = (TextView) findViewById(R.id.textViewchoose);
+        message.setText(new String(Character.toChars(0x1F60A)));
+    }
+    public void onClick2(View view)
+    {
+        TextView message = (TextView) findViewById(R.id.textViewchoose);
+        message.setText(new String(Character.toChars(0x1F60B)));
+    }
+
+    public void onClick3(View view)
+    {
+        TextView message = (TextView) findViewById(R.id.textViewchoose);
+        message.setText(new String(Character.toChars(0x1F60C)));
+    }
+
+    public void onClick4(View view)
+    {
+        TextView message = (TextView) findViewById(R.id.textViewchoose);
+        message.setText(new String(Character.toChars(0x1F60D)));
+    }
+    public void onClick5(View view)
+    {
+        TextView message = (TextView) findViewById(R.id.textViewchoose);
+        message.setText(new String(Character.toChars(0x1F699)));
+    }
+    public void onClick6(View view)
+    {
+        TextView message = (TextView) findViewById(R.id.textViewchoose);
+        message.setText(new String(Character.toChars(0x1F6A7)));
+    }
+
+
     public void sendMessageToDevice(View type) {
         // TODO Check content sticker only
 
-
         final EditText editMessageText = findViewById(R.id.edit_message);
-        final String editMessage = editMessageText.getText().toString().trim();
+        final TextView message = (TextView) findViewById(R.id.textViewchoose);
+        final String editMessage = message.getText().toString().trim();
         sendMessageToDevice(sender, receiverToken, editMessage);
     }
 
