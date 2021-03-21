@@ -171,8 +171,8 @@ public class ChatActivity extends AppCompatActivity {
 
         if (!receiver.equals(sender)) {
             DatabaseReference pushRefForReceive = mDatabase.child("chats").child("receive").child(receiver).child(sender).child("messages").push();
-            pushRefForSend.child("id").setValue(messageID);
-            pushRefForSend.child("timestamp").setValue(timestamp);
+            pushRefForReceive.child("id").setValue(messageID);
+            pushRefForReceive.child("timestamp").setValue(timestamp);
         }
 
         // add message
