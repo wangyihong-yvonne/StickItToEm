@@ -93,16 +93,18 @@ public class ChatActivity extends AppCompatActivity {
 
     }
 
-    public void onClick1(View view)
-    {
+    public void onClick1(View view) {
         TextView message = (TextView) findViewById(R.id.textView2_sticker);
         message.setText(((TextView) view).getText());
     }
 
     public void sendMessageToDevice(View type) {
         final TextView message = (TextView) findViewById(R.id.textView2_sticker);
-//        final EditText editMessageText = findViewById(R.id.edit_message);
         final String editMessage = message.getText().toString().trim();
+        if (editMessage.equals(getResources().getString(R.string.sticker_chosen))) {
+            Toast.makeText(ChatActivity.this, "Please select an emoji", Toast.LENGTH_SHORT).show();
+            return;
+        }
         sendMessageToDevice(sender, receiverToken, editMessage);
     }
 

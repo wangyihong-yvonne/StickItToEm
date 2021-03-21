@@ -74,7 +74,7 @@
         android:id="@+id/textView2_sticker"
         android:layout_width="106dp"
         android:layout_height="35dp"
-        android:text="sticker chosen"
+        android:text="@string/sticker_chosen"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
