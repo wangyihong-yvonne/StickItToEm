@@ -6,4 +6,5 @@
     <string name="congrats" translatable="false">🥳</string>
     <string name="like" translatable="false">👍</string>
     <string name="eyes" translatable="false">👀</string>
+    <string name="sticker_chosen">sticker chosen</string>
 </resources>
