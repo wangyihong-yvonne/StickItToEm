@@ -6,137 +6,137 @@
     android:layout_height="match_parent"
     tools:context=".ChatActivity">
 
+    <!--    <EditText-->
+    <!--        android:id="@+id/edit_message"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:ems="10"-->
+    <!--        android:hint="input here"-->
+    <!--        android:textAlignment="center"-->
+    <!--        app:layout_constraintBottom_toTopOf="@+id/send_msg_button"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintHorizontal_bias="0.497"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toTopOf="parent"-->
+    <!--        app:layout_constraintVertical_bias="0.432" />-->
+
     <Button
         android:id="@+id/button_congrats"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="428dp"
-        android:text="@string/congrats"
+        android:layout_marginStart="160dp"
         android:onClick="onClick1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.133"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:text="@string/congrats"
+        app:layout_constraintBaseline_toBaselineOf="@+id/button_eyes"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/button_eyes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="428dp"
-        android:text="@string/eyes"
+        android:layout_marginEnd="188dp"
+        android:layout_marginBottom="80dp"
         android:onClick="onClick1"
-        app:layout_constraintEnd_toStartOf="@+id/button_likes"
-        app:layout_constraintHorizontal_bias="0.633"
-        app:layout_constraintStart_toEndOf="@+id/button_congrats"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:text="@string/eyes"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/button_likes" />
 
     <Button
         android:id="@+id/button_likes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="428dp"
-        android:text="@string/like"
+        android:layout_marginTop="3dp"
+        android:layout_marginEnd="28dp"
         android:onClick="onClick1"
+        android:text="@string/like"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.894"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/button_eyes" />
 
     <Button
         android:id="@+id/send_msg_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="62dp"
+        android:layout_marginBottom="23dp"
         android:onClick="sendMessageToDevice"
         android:text="Send"
         android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/textView2_sticker"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.959"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.42" />
+        app:layout_constraintStart_toEndOf="@+id/textView2_sticker" />
 
-<!--    <EditText-->
-<!--        android:id="@+id/edit_message"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:ems="10"-->
-<!--        android:hint="input here"-->
-<!--        android:textAlignment="center"-->
-<!--        app:layout_constraintBottom_toTopOf="@+id/send_msg_button"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="0.497"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        app:layout_constraintVertical_bias="0.432" />-->
-
-        <TextView
+    <TextView
         android:id="@+id/textView2_sticker"
-        android:layout_width="106dp"
-        android:layout_height="35dp"
+        android:layout_width="0dp"
+        android:layout_height="59dp"
+        android:layout_marginStart="84dp"
+        android:layout_marginEnd="98dp"
         android:text="sticker chosen"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintEnd_toEndOf="@+id/button_eyes"
+        app:layout_constraintEnd_toStartOf="@+id/send_msg_button"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.412" />
+        app:layout_constraintVertical_bias="0.617" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="68dp"
         android:layout_marginTop="56dp"
+        android:layout_marginEnd="35dp"
         android:text="Receiver:"
         android:textColor="#4E00EA"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/edit_message"
         app:layout_constraintEnd_toStartOf="@+id/receiver_name"
-        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintHorizontal_bias="0.071"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.177" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/receiver_name"
-        android:layout_width="54dp"
-        android:layout_height="53dp"
-        android:layout_marginTop="40dp"
+        android:layout_width="56dp"
+        android:layout_height="34dp"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="13dp"
+        android:layout_marginBottom="36dp"
         android:textColor="#00BCD4"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/edit_message"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.526"
+        app:layout_constraintBottom_toTopOf="@+id/textView3"
+        app:layout_constraintEnd_toStartOf="@+id/button15"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.163" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/button15"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="56dp"
         android:onClick="onHistoryChat"
         android:text="History"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.691"
         app:layout_constraintStart_toEndOf="@+id/receiver_name"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.07" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView3"
-        android:layout_width="286dp"
-        android:layout_height="20dp"
+        android:layout_width="177dp"
+        android:layout_height="38dp"
+        android:layout_marginStart="89dp"
+        android:layout_marginEnd="87dp"
+        android:layout_marginBottom="33dp"
         android:text="select stickers below"
         android:textAlignment="center"
         android:textAllCaps="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.306" />
+        app:layout_constraintBottom_toTopOf="@+id/textView2_sticker"
+        app:layout_constraintEnd_toStartOf="@+id/button_likes"
+        app:layout_constraintHorizontal_bias="0.56"
+        app:layout_constraintStart_toStartOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/receiver_name" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
