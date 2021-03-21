@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/purple_500"
     android:padding="8dp"
+    app:layout_collapseMode="none"
     tools:context=".LoginActivity">
 
     <LinearLayout
@@ -17,17 +18,14 @@
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="8dp">
 
-        <EditText
-            android:id="@+id/editTextTextPersonName"
+        <TextView
+            android:id="@+id/textView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/purple_500"
-            android:ems="10"
             android:fontFamily="cursive"
-            android:inputType="textPersonName"
             android:text="Welcome to Sticker Sending App!"
             android:textAlignment="center"
-            android:textColor="#F8F6FA"
+            android:textColor="#FDFCFC"
             android:textSize="24sp" />
 
         <EditText
@@ -55,7 +53,9 @@
             android:outlineSpotShadowColor="#FFFFFF"
             android:text="@string/login"
             android:textAllCaps="false"
+            android:textColor="#FFFFFF"
             android:textSize="14sp"
+            android:textStyle="bold"
             app:iconTint="#FDF8F8"
             app:rippleColor="@color/white" />
 
