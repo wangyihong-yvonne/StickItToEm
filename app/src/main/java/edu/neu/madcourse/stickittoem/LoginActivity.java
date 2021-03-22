@@ -13,11 +13,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 public class LoginActivity extends AppCompatActivity {
@@ -35,6 +32,16 @@ public class LoginActivity extends AppCompatActivity {
 
         Username = findViewById(R.id.editText_username);
         button = findViewById(R.id.button_login);
+    }
+
+    public void login(View view) {
+        username = Username.getText().toString().trim();
+        // Keep the previous username
+        Username.setText(username);
+        if (username.equals("")) {
+            Toast.makeText(this, "Username can't be empty!", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         FirebaseMessaging.getInstance().getToken()
                 .addOnCompleteListener(new OnCompleteListener<String>() {
@@ -46,40 +53,17 @@ public class LoginActivity extends AppCompatActivity {
                             return;
                         }
                         Token = task.getResult();
+
+                        mDatabase = FirebaseDatabase.getInstance().getReference();
+
+                        mDatabase.child("users").child(username).child("token").setValue(Token);
+
+                        // TODO local storage
+                        Intent intent = new Intent(LoginActivity.this, UserListActivity.class);
+                        intent.putExtra("username", username);
+                        intent.putExtra("device", Token);
+                        startActivity(intent);
                     }
                 });
-
-        mDatabase = FirebaseDatabase.getInstance().getReference();
-    }
-
-    public void login(View view) {
-        if (Token == null) {
-            return;
-        }
-
-        username = Username.getText().toString().trim();
-        // Keep the previous username
-        Username.setText(username);
-        if (username.equals("")) {
-            Toast.makeText(this, "Username can't be empty!", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        mDatabase.child("users").child(username).child("token").setValue(Token);
-
-        mDatabase.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                // TODO local storage
-                Intent intent = new Intent(LoginActivity.this, UserListActivity.class);
-                intent.putExtra("username", username);
-                intent.putExtra("device", Token);
-                startActivity(intent);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-            }
-        });
     }
 }
