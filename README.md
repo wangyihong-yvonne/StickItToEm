@@ -30,4 +30,4 @@ MyFirebaseMessagingService.java--some code are referred to the official doc from
 
 
 ## Code Style
-Please follow [Google Java Style Guide](https://google.github.io/styleguide/javaguide.html). An Android Studio plugin can be found [here](https://github.com/google/google-java-format#intellij-android-studio-and-other-jetbrains-ides).
+Please follow [Google Java Style Guide](https://google.github.io/styleguide/javaguide.html). 
