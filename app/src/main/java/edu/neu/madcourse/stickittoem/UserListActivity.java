@@ -120,6 +120,7 @@ public class UserListActivity extends AppCompatActivity {
     }
 
     public void refreshUserList(View view) {
+        itemList.clear();
         init(false, true);
     }
 
