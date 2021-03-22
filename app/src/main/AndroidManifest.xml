@@ -9,9 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.StickItToEm">
-        <activity android:name=".UserListActivity"></activity>
-        <activity android:name=".HistoryChatActivity" />
-        <activity android:name=".ChatActivity" />
+        <activity android:name=".UserListActivity"
+            android:label="Friend List"></activity>
+        <activity android:name=".HistoryChatActivity" android:label="Chat History"/>
+        <activity android:name=".ChatActivity" android:label="Chat"/>
 
         <service
             android:name=".MyFirebaseMessagingService"
