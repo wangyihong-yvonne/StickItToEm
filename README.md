@@ -13,7 +13,7 @@ Group assignment for CS5520
 
 Install the APK on an emulator or a connected device with the following command:
 1. Clone locally
-2. Add your Firebase server key 
+2. Add your Firebase server key in ChatAcitivity.java SERVER_KEY
 3. Build project
 
 
