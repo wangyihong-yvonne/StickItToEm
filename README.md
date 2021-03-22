@@ -13,12 +13,7 @@ Group assignment for CS5520
 
 Install the APK on an emulator or a connected device with the following command:
 1. Clone locally
-2. Add your Firebase server key to the `local.properties` file as follows:
-  ```
-  server.key=[your_firebase_server_key]
-  ```
-  Replace `[your_firebase_server_key]` with your own key
-
+2. Add your Firebase server key 
 3. Build project
 
 
