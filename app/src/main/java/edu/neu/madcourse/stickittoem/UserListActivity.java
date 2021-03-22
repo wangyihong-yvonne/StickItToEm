@@ -7,8 +7,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -29,7 +32,7 @@ public class UserListActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RviewAdapter rviewAdapter;
     private RecyclerView.LayoutManager rLayoutManger;
-
+    private FloatingActionButton refreshButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +41,7 @@ public class UserListActivity extends AppCompatActivity {
         sender = intent.getStringExtra("username");
         senderToken = intent.getStringExtra("device");
         mDatabase = FirebaseDatabase.getInstance().getReference();
+        refreshButton =  findViewById(R.id.refresh_button);
         init(true, false);
     }
 
@@ -113,6 +117,10 @@ public class UserListActivity extends AppCompatActivity {
         rviewAdapter.setOnItemClickListener(itemClickListener);
         recyclerView.setAdapter(rviewAdapter);
         recyclerView.setLayoutManager(rLayoutManger);
+    }
+
+    public void refreshUserList(View view) {
+        init(false, true);
     }
 
 }
