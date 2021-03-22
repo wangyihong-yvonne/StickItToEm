@@ -18,6 +18,7 @@ Install the APK on an emulator or a connected device with the following command:
   server.key=[your_firebase_server_key]
   ```
   Replace `[your_firebase_server_key]` with your own key
+
 3. Build project
 
 
