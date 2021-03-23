@@ -5,9 +5,9 @@ Group assignment for CS5520
 ## Team members
 
 - Yu Feng ([@singinzrain])
-- Xuan Kong  () 
+- Xuan Kong  (@xkong93) 
 - Yihong Wang ([@wangyihong-yvonne]&[@yihongwang001]) 
-- Huixian Zhang ([@HuixianZhang]) 
+- Huixian Zhang () 
 
 ## Usage
 1. Login
