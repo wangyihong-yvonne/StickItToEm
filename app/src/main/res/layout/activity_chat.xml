@@ -71,11 +71,14 @@
 
     <TextView
         android:id="@+id/textView2_sticker"
-        android:layout_width="100dp"
-        android:layout_height="60dp"
+        android:layout_width="111dp"
+        android:layout_height="51dp"
+        android:outlineAmbientShadowColor="@color/purple_500"
+        android:outlineSpotShadowColor="@color/purple_500"
         android:text="@string/sticker_chosen"
         android:textAlignment="center"
-        android:textSize="24sp"
+        android:textColor="#BFADAD"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -100,16 +103,17 @@
 
     <TextView
         android:id="@+id/receiver_name"
-        android:layout_width="54dp"
-        android:layout_height="53dp"
+        android:layout_width="115dp"
+        android:layout_height="40dp"
         android:textColor="#00BCD4"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/textView3"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.506"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.26" />
+        app:layout_constraintVertical_bias="0.233" />
 
     <Button
         android:id="@+id/button15"
@@ -125,11 +129,14 @@
 
     <TextView
         android:id="@+id/textView3"
-        android:layout_width="286dp"
-        android:layout_height="20dp"
-        android:text="select stickers below"
+        android:layout_width="285dp"
+        android:layout_height="38dp"
+        android:fontFamily="sans-serif-black"
+        android:text="Click stickers below"
         android:textAlignment="center"
         android:textAllCaps="true"
+        android:textColor="@color/purple_500"
+        android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/textView2_sticker"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
