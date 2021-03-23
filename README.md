@@ -14,6 +14,7 @@ Group assignment for CS5520
 2. Choose a friend to chat
 3. Click a sticker and send
 4. Check history
+https://github.com/singinzrain/StickItToEm/blob/main/screenshot.jpeg
 
 ## Installation
 
