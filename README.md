@@ -15,7 +15,7 @@ Group assignment for CS5520
 3. Click a sticker and send
 4. Check history
 
-![Images](https://github.com/singinzrain/StickItToEm/blob/main/screenshot.jpeg?raw=true)
+![Images](https://github.com/singinzrain/StickItToEm/blob/main/screenshot.jpeg?)
 
 
 ## Installation
