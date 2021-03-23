@@ -28,6 +28,11 @@
             android:textColor="#FDFCFC"
             android:textSize="24sp" />
 
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
         <EditText
             android:id="@+id/editText_username"
             android:layout_width="wrap_content"
@@ -44,20 +49,24 @@
 
         <Button
             android:id="@+id/button_login"
+            style="@style/Widget.AppCompat.Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/white"
             android:backgroundTint="@color/white"
+            android:fontFamily="serif"
             android:onClick="login"
             android:outlineAmbientShadowColor="#FAF6F6"
             android:outlineSpotShadowColor="#FFFFFF"
             android:text="@string/login"
-            android:textAllCaps="false"
+            android:textAllCaps="true"
             android:textColor="#FFFFFF"
             android:textSize="14sp"
             android:textStyle="bold"
+            android:visibility="visible"
             app:iconTint="#FDF8F8"
-            app:rippleColor="@color/white" />
+            app:rippleColor="@color/white"
+            app:strokeColor="@color/purple_500" />
 
     </LinearLayout>
 
