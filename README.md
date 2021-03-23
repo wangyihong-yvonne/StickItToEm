@@ -16,6 +16,7 @@ Group assignment for CS5520
 4. Check history
 
 ![Images](https://github.com/singinzrain/StickItToEm/blob/main/screenshot.jpeg?)
+![Images](https://github.com/singinzrain/StickItToEm/blob/main/screenshot2.jpeg)
 
 
 ## Installation
