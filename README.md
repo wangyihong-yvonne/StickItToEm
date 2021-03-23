@@ -7,7 +7,7 @@ Group assignment for CS5520
 - Yu Feng ([@singinzrain])
 - Xuan Kong  () 
 - Yihong Wang ([@wangyihong-yvonne]&[@yihongwang001]) 
-- Huixian Zhang () 
+- Huixian Zhang ([@HuixianZhang]) 
 
 ## Usage
 1. Login
