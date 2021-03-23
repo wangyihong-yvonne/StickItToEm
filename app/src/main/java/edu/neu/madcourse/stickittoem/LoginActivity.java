@@ -33,7 +33,7 @@ public class LoginActivity extends AppCompatActivity {
         Username = findViewById(R.id.editText_username);
         button = findViewById(R.id.button_login);
     }
-
+    //reference: https://firebase.google.com/docs/cloud-messaging/android/client
     public void login(View view) {
         username = Username.getText().toString().trim();
         // Keep the previous username
@@ -57,6 +57,7 @@ public class LoginActivity extends AppCompatActivity {
                         mDatabase = FirebaseDatabase.getInstance().getReference();
 
                         mDatabase.child("users").child(username).child("token").setValue(Token);
+
 
                         // TODO local storage
                         Intent intent = new Intent(LoginActivity.this, UserListActivity.class);
