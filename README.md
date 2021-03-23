@@ -9,6 +9,12 @@ Group assignment for CS5520
 - Yihong Wang ([@wangyihong-yvonne]&[@yihongwang001]) 
 - Huixian Zhang () 
 
+## Usage
+1. Login
+2. Choose a friend to chat
+3. Click a sticker and send
+4. Check history
+
 ## Installation
 
 Install the APK on an emulator or a connected device with the following command:
