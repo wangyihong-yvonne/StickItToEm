@@ -73,7 +73,7 @@ public class UserListActivity extends AppCompatActivity {
                             }
                         }
 
-                        UserItem userItem = new UserItem(0, username, "# unique sticker sent count: " + stickerCount);
+                        UserItem userItem = new UserItem(0, username, "# number of stickers your friend sent: " + stickerCount);
                         itemList.add(userItem);
 
                         if (shouldCreateRecycler) {
